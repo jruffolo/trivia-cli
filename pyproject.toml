@@ -7,10 +7,13 @@ authors = [
     { name = "Joshua Ruffolo", email = "joshua.ruffolo@gmail.com" }
 ]
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "cyclopts>=4.5.4",
+    "requests>=2.32.5",
+]
 
 [project.scripts]
-trivia = "trivia:main"
+trivia = "trivia.main:app"
 
 [build-system]
 requires = ["uv_build>=0.9.30,<0.10.0"]

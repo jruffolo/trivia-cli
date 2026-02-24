@@ -1,2 +1,1 @@
-def main() -> None:
-    print("Hello from trivia!")
+# empty __init__ to enable local module imports
