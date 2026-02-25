@@ -6,9 +6,9 @@ app = App()
 
 
 @app.default
-def main(amount):
+def main(amount, type):
     try:
-        questions = get_questions(amount=amount)
+        questions = get_questions(amount=amount, type=type)
         score = 0
         for index, question in enumerate(questions):
             score += print_question_with_prompt(index, question)

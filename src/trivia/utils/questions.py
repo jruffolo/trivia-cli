@@ -69,16 +69,21 @@ def print_question_with_prompt(index, q) -> int:
             print(f"{label}: {answer}")
     elif type == "boolean":
         prompt_choices = ["True", "False"]
-        answer_key = dict(zip(prompt_choices, questions))
+        answer_key = {
+            "True": "True",
+            "False": "False",
+        }
         print(f"True or False: {question}")
 
     response = Prompt.ask("Your Answer", choices=prompt_choices, case_sensitive=False)
 
     if answer_key[response] == correct_answer:
-        print("[bold green]Correct![/bold green]\n")
+        print("\n[bold green]Correct![/bold green]\n")
         return 1
 
-    print(f"[bold red]Incorrect![/bold red] The correct answer was {correct_answer}\n")
+    print(
+        f"\n[bold red]Incorrect![/bold red] The correct answer was {correct_answer}\n"
+    )
     return 0
 
 
