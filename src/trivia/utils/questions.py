@@ -1,3 +1,4 @@
+from typing import Any
 import json
 import random
 from html import unescape
@@ -54,7 +55,7 @@ def print_question_with_prompt(index, q) -> int:
         [correct_answer] + incorrect_answers, k=len(incorrect_answers) + 1
     )
     prompt_choices = []
-    answer_key = {}
+    choice_key = {}
 
     # Print index and question info
     print(
@@ -63,13 +64,13 @@ def print_question_with_prompt(index, q) -> int:
 
     if type == "multiple":
         prompt_choices = ["A", "B", "C", "D"]
-        answer_key = dict(zip(prompt_choices, questions))
+        choice_key = dict(zip(prompt_choices, questions))
         print(question)
-        for label, answer in answer_key.items():
+        for label, answer in choice_key.items():
             print(f"{label}: {answer}")
     elif type == "boolean":
         prompt_choices = ["True", "False"]
-        answer_key = {
+        choice_key = {
             "True": "True",
             "False": "False",
         }
@@ -77,7 +78,7 @@ def print_question_with_prompt(index, q) -> int:
 
     response = Prompt.ask("Your Answer", choices=prompt_choices, case_sensitive=False)
 
-    if answer_key[response] == correct_answer:
+    if choice_key[response] == correct_answer:
         print("\n[bold green]Correct![/bold green]\n")
         return 1
 
@@ -88,7 +89,7 @@ def print_question_with_prompt(index, q) -> int:
 
 
 # Build URL from BASE_URL
-def build_url(base_url: str, params: dict[str, str | int]) -> str:
+def build_url(base_url: str, params: dict[str, str | int | None]) -> str:
     """
     Returns a valid API Request String built from a dictionary of parameters
     """
@@ -117,16 +118,16 @@ def check_api_response(response_code: int):
             pass
 
 
-def unencode(iterable):
-    if type(iterable) == dict:
+def unencode(iterable: dict[str, Any] | list[Any]):
+    if type(iterable) is dict:
         for key, val in iterable.items():
-            if type(val) == str:
+            if type(val) is str:
                 iterable[key] = unescape(val)
             else:
                 unencode(iterable[key])
-    elif type(iterable) == list:
+    elif type(iterable) is list:
         for idx, item in enumerate(iterable):
-            if type(item) == str:
+            if type(item) is str:
                 iterable[idx] = unescape(item)
             else:
                 unencode(item)
